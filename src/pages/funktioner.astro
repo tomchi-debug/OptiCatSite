@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Features from '../components/Features.astro';
+import CTA from '../components/CTA.astro';
+---
+
+<Layout title="Funktioner | OptiCat">
+	<main>
+		<section class="page-header">
+			<div class="wrap">
+				<span class="eyebrow">Kraftfulla verktyg</span>
+				<h1>Allt ni behöver för att<br><span class="grad">dominera marknaden.</span></h1>
+				<p class="lead">OptiCat är fyllt med funktioner som är specifikt framtagna för svenska VVS- och kylgrossister.</p>
+			</div>
+		</section>
+
+		<Features />
+
+		<section class="extra-features">
+			<div class="wrap">
+				<div class="sec-head">
+					<h2>Mer än bara en sökfunktion</h2>
+					<p>Vi bygger ständigt ut plattformen med nya moduler för att förenkla er vardag.</p>
+				</div>
+				<div class="extra-grid">
+					<div class="extra-card">
+						<h3>Statistik & Insikter</h3>
+						<p>Se vad era kunder söker efter mest. Identifiera trender och sortimentglapp i realtid.</p>
+					</div>
+					<div class="extra-card">
+						<h3>Export till offert</h3>
+						<p>Låt kunderna bygga listor och exportera dem direkt till sina egna affärssystem.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<CTA />
+	</main>
+</Layout>
+
+<style>
+	.page-header {
+		padding: 100px 0 60px;
+		background: var(--vit);
+		border-bottom: 1px solid var(--plat);
+		text-align: center;
+	}
+	.page-header h1 {
+		font-size: clamp(2.2rem, 5vw, 3.5rem);
+		margin-bottom: 20px;
+	}
+	.page-header .grad {
+		background: var(--gradient);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+	.page-header .lead {
+		font-size: 1.15rem;
+		max-width: 42rem;
+		margin: 0 auto;
+		color: #3e4c59;
+	}
+
+	.extra-features {
+		padding: 80px 0;
+	}
+	.extra-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 30px;
+	}
+	.extra-card {
+		background: var(--vit);
+		padding: 30px;
+		border-radius: var(--radius);
+		border: 1px solid var(--plat);
+	}
+	.extra-card h3 {
+		color: var(--kyla);
+		margin-bottom: 12px;
+	}
+	
+	@media (max-width: 768px) {
+		.extra-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

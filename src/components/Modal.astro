@@ -1,0 +1,85 @@
+---
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<dialog id={id} class="modal">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <h3>{title}</h3>
+      <button class="close-modal" data-modal-id={id}>&times;</button>
+    </div>
+    <div class="modal-body">
+      <slot />
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Logik för att stänga modalen
+  const closeButtons = document.querySelectorAll('.close-modal');
+  closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const modalId = button.getAttribute('data-modal-id');
+      const modal = document.getElementById(modalId) as HTMLDialogElement;
+      if (modal) modal.close();
+    });
+  });
+
+  // Stäng om man klickar utanför (på backdrop)
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        (modal as HTMLDialogElement).close();
+      }
+    });
+  });
+</script>
+
+<style>
+  .modal {
+    border: none;
+    border-radius: var(--radius);
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    background: var(--vit);
+  }
+  .modal::backdrop {
+    background: rgba(31, 41, 51, 0.4);
+    backdrop-filter: blur(4px);
+  }
+  .modal-inner {
+    padding: 32px;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--frost);
+    padding-bottom: 16px;
+  }
+  .modal-header h3 {
+    margin: 0;
+    color: var(--stal);
+  }
+  .close-modal {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #7b8794;
+    padding: 0;
+  }
+  .close-modal:hover {
+    color: var(--varme);
+  }
+</style>

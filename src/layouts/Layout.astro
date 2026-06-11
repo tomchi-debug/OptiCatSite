@@ -1,0 +1,154 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "OptiCat ersätter PDF-kataloger och Excel-listor med en sökbar digital produktkatalog byggd för svenska VVS- och kylgrossister." } = Astro.props;
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="sv">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<Header />
+		<slot />
+		<Footer />
+		<script>
+			// Global scroll-reveal logik
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!reduceMotion && 'IntersectionObserver' in window) {
+				const io = new IntersectionObserver(entries => {
+					entries.forEach(e => {
+						if (e.isIntersecting) { 
+							e.target.classList.add('visible'); 
+							io.unobserve(e.target); 
+						}
+					});
+				}, { threshold: 0.12 });
+				document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+			} else {
+				document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+			}
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--stal: #1F2933;
+		--frost: #EEF2F5;
+		--vit: #FFFFFF;
+		--plat: #C9D3DB;
+		--kyla: #1B6CA8;
+		--varme: #E8590C;
+		--gradient: linear-gradient(90deg, var(--kyla), var(--varme));
+		--max: 1140px;
+		--radius: 10px;
+	}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	html {
+		scroll-behavior: smooth;
+	}
+	body {
+		font-family: 'IBM Plex Sans', system-ui, sans-serif;
+		color: var(--stal);
+		background: var(--frost);
+		line-height: 1.6;
+		-webkit-font-smoothing: antialiased;
+	}
+	h1, h2, h3 {
+		font-family: 'Archivo', sans-serif;
+		line-height: 1.12;
+		letter-spacing: -0.015em;
+	}
+	.mono {
+		font-family: 'IBM Plex Mono', monospace;
+	}
+	a {
+		color: inherit;
+	}
+	.wrap {
+		max-width: var(--max);
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+	.btn {
+		display: inline-block;
+		padding: 12px 26px;
+		border-radius: var(--radius);
+		font-weight: 600;
+		font-size: .95rem;
+		text-decoration: none;
+		transition: transform .15s ease, box-shadow .15s ease;
+		cursor: pointer;
+		border: none;
+	}
+	.btn:focus-visible {
+		outline: 3px solid var(--kyla);
+		outline-offset: 2px;
+	}
+	.btn-primary {
+		background: var(--varme);
+		color: #fff;
+		box-shadow: 0 2px 10px rgba(232, 89, 12, .3);
+	}
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 18px rgba(232, 89, 12, .35);
+	}
+	.btn-ghost {
+		border: 1.5px solid var(--plat);
+		color: var(--stal);
+		background: var(--vit);
+	}
+	.btn-ghost:hover {
+		border-color: var(--kyla);
+		color: var(--kyla);
+	}
+	.eyebrow {
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: .78rem;
+		letter-spacing: .14em;
+		text-transform: uppercase;
+		color: var(--kyla);
+		font-weight: 500;
+		margin-bottom: 18px;
+		display: block;
+	}
+	.reveal {
+		opacity: 0;
+		transform: translateY(22px);
+		transition: opacity .6s ease, transform .6s ease;
+	}
+	.reveal.visible {
+		opacity: 1;
+		transform: none;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+		.reveal {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+	}
+</style>

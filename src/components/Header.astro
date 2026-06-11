@@ -1,0 +1,79 @@
+---
+---
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="/">
+      <span class="logo-mark"><span></span></span>
+      OptiCat
+    </a>
+    <nav class="nav-links">
+      <a href="/funktioner">Funktioner</a>
+      <a href="/om-oss">Om oss</a>
+      <a href="/butik">Butik</a>
+      <a href="/#kontakt" class="btn btn-primary">Boka demo</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(238, 242, 245, .92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--plat);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Archivo';
+    font-weight: 800;
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--gradient);
+    display: grid;
+    place-items: center;
+  }
+  .logo-mark span {
+    width: 12px;
+    height: 12px;
+    border: 2.5px solid #fff;
+    border-radius: 3px;
+    display: block;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: .95rem;
+    font-weight: 500;
+    color: #3e4c59;
+  }
+  .nav-links a:hover {
+    color: var(--kyla);
+  }
+  .nav .btn {
+    padding: 9px 20px;
+  }
+  @media (max-width: 900px) {
+    .nav-links a:not(.btn) {
+      display: none;
+    }
+  }
+</style>

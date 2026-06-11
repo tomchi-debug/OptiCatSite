@@ -1,0 +1,82 @@
+---
+---
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Utmaningen</span>
+      <h2>Känner ni igen det här?</h2>
+      <p>De flesta grossister sitter fortfarande med arbetssätt som kostar tid i varje enskild kundkontakt.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain reveal">
+        <span class="x">// PDF-katalogen</span>
+        <h3>Inaktuell samma dag den trycks</h3>
+        <p>Priser ändras, artiklar utgår och nya tillkommer – men katalogen kunderna bläddrar i är månader gammal.</p>
+      </div>
+      <div class="pain reveal">
+        <span class="x">// Excel-listorna</span>
+        <h3>Tio versioner av sanningen</h3>
+        <p>Sortimentet lever i kalkylblad som mejlas runt. Ingen vet säkert vilken fil som gäller just nu.</p>
+      </div>
+      <div class="pain reveal">
+        <span class="x">// Telefonkön</span>
+        <h3>Säljarna blir uppslagsverk</h3>
+        <p>Enkla frågor om mått, kapacitet och artikelnummer äter upp tid som borde gå till affärer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 88px 0;
+  }
+  .sec-head {
+    max-width: 42rem;
+    margin-bottom: 52px;
+  }
+  .sec-head h2 {
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    font-weight: 800;
+    margin: 14px 0 14px;
+  }
+  .sec-head p {
+    color: #3e4c59;
+    font-size: 1.05rem;
+  }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .pain {
+    background: var(--vit);
+    border: 1px solid var(--plat);
+    border-radius: var(--radius);
+    padding: 28px 26px;
+  }
+  .pain h3 {
+    font-size: 1.08rem;
+    margin-bottom: 10px;
+  }
+  .pain p {
+    font-size: .95rem;
+    color: #3e4c59;
+  }
+  .pain .x {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--varme);
+    font-size: .8rem;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 900px) {
+    .pain-grid {
+      grid-template-columns: 1fr;
+    }
+    section {
+      padding: 64px 0;
+    }
+  }
+</style>

@@ -1,0 +1,263 @@
+---
+---
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Produktkatalog för VVS- och kylgrossister</span>
+      <h1>Hela ert sortiment.<br><span class="grad">Sökbart på sekunder.</span></h1>
+      <p class="lead">OptiCat ersätter tunga PDF-kataloger och spridda Excel-listor med en levande digital katalog – byggd för den svenska marknaden, med RSK-nummer, datablad och era egna prislistor.</p>
+      <div class="hero-cta">
+        <a href="#kontakt" class="btn btn-primary">Boka en demo</a>
+        <a href="#funktioner" class="btn btn-ghost">Se funktionerna</a>
+      </div>
+      <p class="hero-note">Ingen installation hos era kunder – fungerar direkt i webbläsaren.</p>
+    </div>
+
+    <!-- Signaturelement: katalogsökning live -->
+    <div class="mock" aria-hidden="true">
+      <div class="mock-top"><i></i><i></i><i></i></div>
+      <div class="mock-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7b8794" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span id="typed"></span>
+      </div>
+      <div class="mock-results" id="mock-results">
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div>
+            <div class="pname">Cirkulationspump CP-32 Pro</div>
+            <div class="pspec">DN32 · 6 m lyfthöjd · 230 V · IP44</div>
+          </div>
+          <span class="prsk">RSK 575 21 04</span>
+        </div>
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+          <div>
+            <div class="pname">Plattvärmeväxlare PVX-40</div>
+            <div class="pspec">40 plattor · 16 bar · lödd AISI 316</div>
+          </div>
+          <span class="prsk">RSK 486 90 12</span>
+        </div>
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div>
+          <div>
+            <div class="pname">Kanalfläkt KF-250 EC</div>
+            <div class="pspec">Ø250 · 1 180 m³/h · EC-motor</div>
+          </div>
+          <span class="prsk">RSK 832 14 77</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <b>Byggd för Sverige</b><span class="dot"></span>
+    RSK-nummer<span class="dot"></span>
+    Svenska datablad<span class="dot"></span>
+    Kundspecifika prislistor<span class="dot"></span>
+    Alltid uppdaterat
+  </div>
+</div>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const queries = ['cirkulationspump dn32', 'plattvärmeväxlare', 'kanalfläkt ec 250', 'RSK 575 21 04'];
+  const typedEl = document.getElementById('typed');
+  
+  if (typedEl) {
+    if (reduceMotion) {
+      typedEl.textContent = queries[0];
+    } else {
+      let qi = 0, ci = 0, deleting = false;
+      function tick(){
+        const q = queries[qi];
+        typedEl.textContent = q.slice(0, ci);
+        let delay = deleting ? 35 : 75;
+        if (!deleting && ci === q.length) { delay = 2200; deleting = true; }
+        else if (deleting && ci === 0) { deleting = false; qi = (qi + 1) % queries.length; delay = 400; }
+        ci += deleting ? -1 : 1;
+        setTimeout(tick, delay);
+      }
+      tick();
+    }
+  }
+</script>
+
+<style>
+  .hero {
+    padding: 84px 0 72px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .hero h1 .grad {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead {
+    font-size: 1.15rem;
+    color: #3e4c59;
+    max-width: 34rem;
+    margin-bottom: 32px;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .hero-note {
+    margin-top: 18px;
+    font-size: .85rem;
+    color: #7b8794;
+  }
+
+  /* ---------- Katalog-mock ---------- */
+  .mock {
+    background: var(--vit);
+    border: 1px solid var(--plat);
+    border-radius: 16px;
+    box-shadow: 0 18px 50px rgba(31, 41, 51, .12);
+    overflow: hidden;
+  }
+  .mock-top {
+    display: flex;
+    gap: 7px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--frost);
+  }
+  .mock-top i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--plat);
+    display: block;
+  }
+  .mock-search {
+    margin: 16px 16px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid var(--plat);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .9rem;
+    color: var(--stal);
+    background: var(--frost);
+  }
+  #typed::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    background: var(--kyla);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  .mock-results {
+    padding: 8px 16px 18px;
+    display: grid;
+    gap: 10px;
+  }
+  .pcard {
+    border: 1px solid var(--frost);
+    border-radius: 10px;
+    padding: 13px 15px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 13px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pcard::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--gradient);
+  }
+  .pthumb {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: var(--frost);
+    display: grid;
+    place-items: center;
+    color: var(--kyla);
+  }
+  .pname {
+    font-weight: 600;
+    font-size: .92rem;
+  }
+  .pspec {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .74rem;
+    color: #7b8794;
+    margin-top: 2px;
+  }
+  .prsk {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .74rem;
+    color: var(--kyla);
+    background: var(--frost);
+    padding: 4px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Bandet ---------- */
+  .band {
+    background: var(--stal);
+    color: #cbd2d9;
+    padding: 22px 0;
+  }
+  .band .wrap {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .84rem;
+    text-align: center;
+  }
+  .band b {
+    color: #fff;
+    font-weight: 500;
+  }
+  .band .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--varme);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+    .hero {
+      padding: 56px 0 48px;
+    }
+  }
+</style>

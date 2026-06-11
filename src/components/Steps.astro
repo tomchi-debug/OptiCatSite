@@ -1,0 +1,81 @@
+---
+---
+<section id="sa-fungerar-det">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Så fungerar det</span>
+      <h2>Från kalkylblad till levande katalog i tre steg</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <h3>Importera sortimentet</h3>
+        <p>Vi läser in era befintliga produktdata – från Excel, ERP eller leverantörsfiler – och strukturerar dem åt er.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Anpassa katalogen</h3>
+        <p>Er logotyp, era kategorier, era prislistor. Katalogen ser ut och känns som en del av ert varumärke.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Lansera mot kunderna</h3>
+        <p>Bjud in kunderna med en länk. Inga installationer, inga manualer – bara att börja söka.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 88px 0;
+  }
+  .sec-head {
+    max-width: 42rem;
+    margin-bottom: 52px;
+  }
+  .sec-head h2 {
+    font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+    font-weight: 800;
+    margin: 14px 0 14px;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    counter-reset: steg;
+  }
+  .step {
+    background: var(--vit);
+    border: 1px solid var(--plat);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    position: relative;
+  }
+  .step::before {
+    counter-increment: steg;
+    content: counter(steg, decimal-leading-zero);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .8rem;
+    color: #fff;
+    background: var(--kyla);
+    padding: 5px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+  .step:last-child::before {
+    background: var(--varme);
+  }
+  .step h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  .step p {
+    font-size: .95rem;
+    color: #3e4c59;
+  }
+
+  @media (max-width: 900px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OptiCat – Digital produktkatalog för VVS- och kylgrossister</title>
+<meta name="description" content="OptiCat ersätter PDF-kataloger och Excel-listor med en sökbar digital produktkatalog byggd för svenska VVS- och kylgrossister. RSK-nummer, datablad och prislistor – alltid uppdaterat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stal:#1F2933;          /* mörk stålgrå – text */
+    --frost:#EEF2F5;         /* kall ljus bakgrund */
+    --vit:#FFFFFF;
+    --plat:#C9D3DB;          /* plåtsilver – linjer */
+    --kyla:#1B6CA8;          /* kall accent */
+    --varme:#E8590C;         /* varm accent – CTA */
+    --gradient:linear-gradient(90deg,var(--kyla),var(--varme));
+    --max:1140px;
+    --radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    color:var(--stal);
+    background:var(--frost);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.12;letter-spacing:-0.015em}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(238,242,245,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--plat);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Archivo';font-weight:800;font-size:1.25rem;text-decoration:none}
+  .logo-mark{width:26px;height:26px;border-radius:6px;background:var(--gradient);display:grid;place-items:center}
+  .logo-mark span{width:12px;height:12px;border:2.5px solid #fff;border-radius:3px;display:block}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{text-decoration:none;font-size:.95rem;font-weight:500;color:#3e4c59}
+  .nav-links a:hover{color:var(--kyla)}
+  .btn{
+    display:inline-block;padding:12px 26px;border-radius:var(--radius);
+    font-weight:600;font-size:.95rem;text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:focus-visible{outline:3px solid var(--kyla);outline-offset:2px}
+  .btn-primary{background:var(--varme);color:#fff;box-shadow:0 2px 10px rgba(232,89,12,.3)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(232,89,12,.35)}
+  .btn-ghost{border:1.5px solid var(--plat);color:var(--stal);background:var(--vit)}
+  .btn-ghost:hover{border-color:var(--kyla);color:var(--kyla)}
+  .nav .btn{padding:9px 20px}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:84px 0 72px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--kyla);font-weight:500;margin-bottom:18px;display:block;
+  }
+  .hero h1{font-size:clamp(2.2rem,4.6vw,3.4rem);font-weight:800;margin-bottom:20px}
+  .hero h1 .grad{background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:1.15rem;color:#3e4c59;max-width:34rem;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:18px;font-size:.85rem;color:#7b8794}
+
+  /* ---------- Katalog-mock (signaturelementet) ---------- */
+  .mock{
+    background:var(--vit);border:1px solid var(--plat);border-radius:16px;
+    box-shadow:0 18px 50px rgba(31,41,51,.12);overflow:hidden;
+  }
+  .mock-top{display:flex;gap:7px;padding:13px 16px;border-bottom:1px solid var(--frost)}
+  .mock-top i{width:10px;height:10px;border-radius:50%;background:var(--plat);display:block}
+  .mock-search{
+    margin:16px 16px 8px;display:flex;align-items:center;gap:10px;
+    border:1.5px solid var(--plat);border-radius:8px;padding:11px 14px;
+    font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--stal);background:var(--frost);
+  }
+  .mock-search svg{flex-shrink:0}
+  #typed::after{content:"";display:inline-block;width:2px;height:1.05em;background:var(--kyla);
+    margin-left:2px;vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .mock-results{padding:8px 16px 18px;display:grid;gap:10px}
+  .pcard{
+    border:1px solid var(--frost);border-radius:10px;padding:13px 15px;
+    display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .pcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gradient)}
+  .pthumb{width:42px;height:42px;border-radius:8px;background:var(--frost);display:grid;place-items:center;color:var(--kyla)}
+  .pname{font-weight:600;font-size:.92rem}
+  .pspec{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:#7b8794;margin-top:2px}
+  .prsk{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--kyla);
+    background:var(--frost);padding:4px 9px;border-radius:6px;white-space:nowrap}
+
+  /* ---------- Bandet ---------- */
+  .band{background:var(--stal);color:#cbd2d9;padding:22px 0}
+  .band .wrap{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;font-size:.84rem;text-align:center}
+  .band b{color:#fff;font-weight:500}
+  .band .dot{width:5px;height:5px;border-radius:50%;background:var(--varme);flex-shrink:0}
+
+  /* ---------- Sektioner ---------- */
+  section{padding:88px 0}
+  .sec-head{max-width:42rem;margin-bottom:52px}
+  .sec-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:800;margin:14px 0 14px}
+  .sec-head p{color:#3e4c59;font-size:1.05rem}
+
+  /* Problem */
+  .pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pain{
+    background:var(--vit);border:1px solid var(--plat);border-radius:var(--radius);
+    padding:28px 26px;
+  }
+  .pain h3{font-size:1.08rem;margin-bottom:10px}
+  .pain p{font-size:.95rem;color:#3e4c59}
+  .pain .x{font-family:'IBM Plex Mono',monospace;color:var(--varme);font-size:.8rem;display:block;margin-bottom:14px}
+
+  /* Funktioner – databladsrader */
+  .features{background:var(--vit);border-top:1px solid var(--plat);border-bottom:1px solid var(--plat)}
+  .feat-list{border-top:1px solid var(--plat)}
+  .feat{
+    display:grid;grid-template-columns:140px 1fr 1.4fr;gap:28px;align-items:baseline;
+    padding:26px 4px;border-bottom:1px solid var(--plat);
+  }
+  .feat .code{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--kyla);letter-spacing:.08em}
+  .feat h3{font-size:1.12rem}
+  .feat p{font-size:.96rem;color:#3e4c59}
+
+  /* Så fungerar det */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:steg}
+  .step{
+    background:var(--vit);border:1px solid var(--plat);border-radius:var(--radius);
+    padding:30px 26px;position:relative;
+  }
+  .step::before{
+    counter-increment:steg;content:counter(steg,decimal-leading-zero);
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:#fff;
+    background:var(--kyla);padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:18px;
+  }
+  .step:last-child::before{background:var(--varme)}
+  .step h3{font-size:1.1rem;margin-bottom:10px}
+  .step p{font-size:.95rem;color:#3e4c59}
+
+  /* CTA */
+  .cta{background:var(--stal);color:#fff}
+  .cta .inner{text-align:center;max-width:38rem;margin:0 auto}
+  .cta h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;margin-bottom:16px}
+  .cta p{color:#cbd2d9;margin-bottom:34px;font-size:1.05rem}
+  .cta .strip{height:4px;width:120px;background:var(--gradient);border-radius:2px;margin:0 auto 34px}
+
+  /* Footer */
+  footer{padding:36px 0;border-top:1px solid var(--plat)}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-size:.88rem;color:#7b8794}
+
+  /* ---------- Scroll-reveal ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    #typed::after{animation:none}
+  }
+
+  /* ---------- Responsivt ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .pain-grid,.steps{grid-template-columns:1fr}
+    .feat{grid-template-columns:1fr;gap:8px;padding:24px 4px}
+    .nav-links a:not(.btn){display:none}
+    section{padding:64px 0}
+    .hero{padding:56px 0 48px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">
+      <span class="logo-mark"><span></span></span>
+      OptiCat
+    </a>
+    <nav class="nav-links">
+      <a href="#funktioner">Funktioner</a>
+      <a href="#sa-fungerar-det">Så fungerar det</a>
+      <a href="#kontakt" class="btn btn-primary">Boka demo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Produktkatalog för VVS- och kylgrossister</span>
+      <h1>Hela ert sortiment.<br><span class="grad">Sökbart på sekunder.</span></h1>
+      <p class="lead">OptiCat ersätter tunga PDF-kataloger och spridda Excel-listor med en levande digital katalog – byggd för den svenska marknaden, med RSK-nummer, datablad och era egna prislistor.</p>
+      <div class="hero-cta">
+        <a href="#kontakt" class="btn btn-primary">Boka en demo</a>
+        <a href="#funktioner" class="btn btn-ghost">Se funktionerna</a>
+      </div>
+      <p class="hero-note">Ingen installation hos era kunder – fungerar direkt i webbläsaren.</p>
+    </div>
+
+    <!-- Signaturelement: katalogsökning live -->
+    <div class="mock" aria-hidden="true">
+      <div class="mock-top"><i></i><i></i><i></i></div>
+      <div class="mock-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7b8794" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span id="typed"></span>
+      </div>
+      <div class="mock-results" id="mock-results">
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div>
+            <div class="pname">Cirkulationspump CP-32 Pro</div>
+            <div class="pspec">DN32 · 6 m lyfthöjd · 230 V · IP44</div>
+          </div>
+          <span class="prsk">RSK 575 21 04</span>
+        </div>
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+          <div>
+            <div class="pname">Plattvärmeväxlare PVX-40</div>
+            <div class="pspec">40 plattor · 16 bar · lödd AISI 316</div>
+          </div>
+          <span class="prsk">RSK 486 90 12</span>
+        </div>
+        <div class="pcard">
+          <div class="pthumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div>
+          <div>
+            <div class="pname">Kanalfläkt KF-250 EC</div>
+            <div class="pspec">Ø250 · 1 180 m³/h · EC-motor</div>
+          </div>
+          <span class="prsk">RSK 832 14 77</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAND ============ -->
+<div class="band">
+  <div class="wrap">
+    <b>Byggd för Sverige</b><span class="dot"></span>
+    RSK-nummer<span class="dot"></span>
+    Svenska datablad<span class="dot"></span>
+    Kundspecifika prislistor<span class="dot"></span>
+    Alltid uppdaterat
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Utmaningen</span>
+      <h2>Känner ni igen det här?</h2>
+      <p>De flesta grossister sitter fortfarande med arbetssätt som kostar tid i varje enskild kundkontakt.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain reveal">
+        <span class="x">// PDF-katalogen</span>
+        <h3>Inaktuell samma dag den trycks</h3>
+        <p>Priser ändras, artiklar utgår och nya tillkommer – men katalogen kunderna bläddrar i är månader gammal.</p>
+      </div>
+      <div class="pain reveal">
+        <span class="x">// Excel-listorna</span>
+        <h3>Tio versioner av sanningen</h3>
+        <p>Sortimentet lever i kalkylblad som mejlas runt. Ingen vet säkert vilken fil som gäller just nu.</p>
+      </div>
+      <div class="pain reveal">
+        <span class="x">// Telefonkön</span>
+        <h3>Säljarna blir uppslagsverk</h3>
+        <p>Enkla frågor om mått, kapacitet och artikelnummer äter upp tid som borde gå till affärer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FUNKTIONER ============ -->
+<section class="features" id="funktioner">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Funktioner</span>
+      <h2>Allt en grossistkatalog ska klara</h2>
+      <p>OptiCat är inte en webbshop med produktbilder – det är ett tekniskt arbetsverktyg för er och era kunder.</p>
+    </div>
+    <div class="feat-list">
+      <div class="feat reveal">
+        <span class="code">F-01</span>
+        <h3>Blixtsnabb sökning</h3>
+        <p>Sök på produktnamn, RSK-nummer, artikelnummer eller fritext. Träffar visas medan man skriver.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="code">F-02</span>
+        <h3>Filtrering på tekniska parametrar</h3>
+        <p>Dimension, kapacitet, anslutning, spänning, energiklass – kunden hittar rätt produkt utan att ringa.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="code">F-03</span>
+        <h3>Datablad och dokument</h3>
+        <p>Produktblad, monteringsanvisningar och certifikat samlade på varje produktsida, alltid i senaste version.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="code">F-04</span>
+        <h3>Kundspecifika prislistor</h3>
+        <p>Varje inloggad kund ser sina egna avtalspriser och rabatter – aldrig någon annans.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="code">F-05</span>
+        <h3>En källa till sanning</h3>
+        <p>Uppdatera sortimentet på ett ställe så slår ändringen igenom överallt, direkt.</p>
+      </div>
+      <div class="feat reveal">
+        <span class="code">F-06</span>
+        <h3>Fungerar på alla enheter</h3>
+        <p>Dator på kontoret, surfplatta på lagret eller mobil ute på fältet – samma katalog, anpassad layout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SÅ FUNGERAR DET ============ -->
+<section id="sa-fungerar-det">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Så fungerar det</span>
+      <h2>Från kalkylblad till levande katalog i tre steg</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <h3>Importera sortimentet</h3>
+        <p>Vi läser in era befintliga produktdata – från Excel, ERP eller leverantörsfiler – och strukturerar dem åt er.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Anpassa katalogen</h3>
+        <p>Er logotyp, era kategorier, era prislistor. Katalogen ser ut och känns som en del av ert varumärke.</p>
+      </div>
+      <div class="step reveal">
+        <h3>Lansera mot kunderna</h3>
+        <p>Bjud in kunderna med en länk. Inga installationer, inga manualer – bara att börja söka.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="kontakt">
+  <div class="wrap inner reveal">
+    <div class="strip"></div>
+    <h2>Se OptiCat med ert eget sortiment</h2>
+    <p>Boka en demo så visar vi hur er katalog kan se ut – med era produkter, era kategorier och era priser.</p>
+    <a href="mailto:info@opticat.se?subject=Demo%20av%20OptiCat" class="btn btn-primary">Boka demo via e-post</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>OptiCat</b> · Malmö, Sverige</span>
+    <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+  // Årtal i footern
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' OptiCat';
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Skrivanimation i katalog-mocken
+  const queries = ['cirkulationspump dn32', 'plattvärmeväxlare', 'kanalfläkt ec 250', 'RSK 575 21 04'];
+  const typedEl = document.getElementById('typed');
+  if (reduceMotion) {
+    typedEl.textContent = queries[0];
+  } else {
+    let qi = 0, ci = 0, deleting = false;
+    function tick(){
+      const q = queries[qi];
+      typedEl.textContent = q.slice(0, ci);
+      let delay = deleting ? 35 : 75;
+      if (!deleting && ci === q.length) { delay = 2200; deleting = true; }
+      else if (deleting && ci === 0) { deleting = false; qi = (qi + 1) % queries.length; delay = 400; }
+      ci += deleting ? -1 : 1;
+      setTimeout(tick, delay);
+    }
+    tick();
+  }
+
+  // Scroll-reveal
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+</script>
+
+</body>
+</html>
