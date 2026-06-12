@@ -22,3 +22,6 @@ dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Centralized in Way-Of/f-rr-d
+thoughts/
