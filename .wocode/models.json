@@ -1,0 +1,51 @@
+{
+  "ollama": {
+    "api": "openai-completions",
+    "apiKey": "ollama",
+    "baseUrl": "http://127.0.0.1:11434/v1",
+    "models": [
+      {
+        "_launch": true,
+        "contextWindow": 131072,
+        "id": "qwen3.6:latest",
+        "input": ["text"],
+        "reasoning": true
+      },
+      {
+        "_launch": true,
+        "contextWindow": 32768,
+        "id": "qwen3.5:9b-32k",
+        "input": ["text"],
+        "reasoning": true
+      },
+      {
+        "_launch": true,
+        "contextWindow": 65536,
+        "id": "qwen3.5:9b-64k",
+        "input": ["text"],
+        "reasoning": true
+      },
+      {
+        "_launch": true,
+        "contextWindow": 196608,
+        "id": "qwen3.5:9b-196k",
+        "input": ["text"],
+        "reasoning": true
+      },
+      {
+        "_launch": true,
+        "contextWindow": 16384,
+        "id": "codellama:latest",
+        "input": ["text"],
+        "reasoning": false
+      },
+      {
+        "_launch": true,
+        "contextWindow": 32768,
+        "id": "gemma3:4b",
+        "input": ["text"],
+        "reasoning": false
+      }
+    ]
+  }
+}
